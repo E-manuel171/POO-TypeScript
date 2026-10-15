@@ -1,4 +1,6 @@
-export class Pessoa { // classe Pessoa, que também é um tipo "abstrato"
+import { Endereco } from "./endereco";
+
+abstract class Pessoa { // classe Pessoa, que também é um tipo "abstrato"
     // definindo esses "atributos/variáveis/elementos" que fazem parte do molde pessoa desse sistema
 
     //////////////////////////
@@ -12,7 +14,7 @@ export class Pessoa { // classe Pessoa, que também é um tipo "abstrato"
     CPF: string = '';
     idade: number = 0;
     brasileiro: boolean = true;
-    enderecos: string[] = []; // Ou ler enderecos: Array<string>, inicializado com array vazio
+    enderecos: Endereco[] = []; // Ou ler enderecos: Array<string>, inicializado com array vazio
 
     ///////////////////////
     //ATRIBUTOS ESTÁTICOS//
@@ -24,8 +26,7 @@ export class Pessoa { // classe Pessoa, que também é um tipo "abstrato"
     //CONSTRUTOR//
     //////////////
 
-    constructor(matricula: number, nome: string, sobrenome: string, sexo: string, CPF: string, idade: number, brasileiro: boolean, enderecos: string[]) {
-        this.matricula = matricula;
+    constructor(nome: string, sobrenome: string, sexo: string, CPF: string, idade: number, brasileiro: boolean, enderecos: Endereco[]) {
         this.nome = nome; // this para acessar métodos e atributos de instância
         this.sobrenome = sobrenome;
         this.sexo = sexo;
@@ -45,8 +46,10 @@ export class Pessoa { // classe Pessoa, que também é um tipo "abstrato"
     return (`O nome completo é: ${this.nome} ${this.sobrenome}`)
     }
 
-    recuperarEndereco(posicao: number): string | undefined { // COMPORTAMENTOS OU MÉTODOS
+    recuperarEndereco(posicao: number): Endereco | undefined { // COMPORTAMENTOS OU MÉTODOS
+    console.log("MÉTODO DE RETORNO DE ENDEREÇO AQUI <-----");
     return this.enderecos[posicao]; // this.fulano reserva o atributo no contexto da classe
+    
     }
 
     /////////////////////
@@ -57,4 +60,12 @@ export class Pessoa { // classe Pessoa, que também é um tipo "abstrato"
         return Pessoa.quantidadePessoas;
     }
 
+    ///////////////////// sem implementação, para garantir que as classes que sejam filhas de
+    //MÉTODOS ABSTRATOS// Pessoa possuam uma implementação desses métodos, assim é possível que
+    ///////////////////// cada classe herde sua maneira específica de gerar matrícula (Polimorfismo)
+
+    abstract gerarMatricula(): number;
+
 }
+
+export { Pessoa }

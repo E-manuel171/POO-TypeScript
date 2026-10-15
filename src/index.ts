@@ -1,13 +1,19 @@
 import { Pessoa } from "./pessoa";
-import { Aluno } from "./aluno";
+import { Aluno, SituacaoAluno } from "./aluno";
 import { Professor } from "./professor";
+import { Endereco } from "./endereco";
 
-const diego: Pessoa = new Pessoa(111,"Diego", "Armando de Oliveira","Masculino","888.888.888-88", 36, true, [`Rua A`,`Rua C`]);
-const felipe: Aluno = new Aluno(123,"Felipe","Jose","Masculino","777.777.777-77",34,true,["Rua F"],"Informática","Matriculado");
-const luis: Professor = new Professor(234, "Luís","Santos Silva","Masculino","666.666.666-66", 56, false, [`Portugal`], 1000);
+const endereco01 = new Endereco("49000-666",13, "Rua A", "Bairro B", "Cidade C", "Sergipe");
+const endereco02 = new Endereco("47000-000",16, "Rua Z", "Bairro Q", "Cidade K", "Sergipe");
 
-console.log(diego);
-console.log(felipe.recuperarEndereco(0));
-console.log(luis);
+const felipe: Aluno = new Aluno("Felipe","Jose","Masculino","777.777.777-77",34,true,[endereco01],"Informática", SituacaoAluno.FORMANDO);
+const luis: Professor = new Professor("Luís","Santos Silva","Masculino","666.666.666-66", 56, false, [endereco01, endereco02], 1000);
+
+felipe.submeterProjetoPesquisa();
+felipe.submeterProjetoExtensão();
+
+luis.submeterProjetoPesquisa();
+luis.submeterProjetoExtensão();
+
 console.log("------------------------");
 console.log(Pessoa.getQuantidadePessoas());
