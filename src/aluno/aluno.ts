@@ -1,6 +1,6 @@
-import { Endereco } from "./endereco";
-import { Pessoa } from "./pessoa";
-import { Projeto } from "./projeto"
+import { Endereco } from "../endereco/endereco";
+import { Pessoa } from "../pessoa/pessoa";
+import { Projeto } from "../projeto/projeto"
 
 class Aluno extends Pessoa implements Projeto { // Aluno tem a herança da classe Pessoa
     
@@ -8,8 +8,28 @@ class Aluno extends Pessoa implements Projeto { // Aluno tem a herança da class
     //ATRIBUTOS DE INSTÂNCIA//
     //////////////////////////
 
-    curso: string;
-    situacao: SituacaoAluno;
+    private _curso: string = '';
+    private _situacao: SituacaoAluno = SituacaoAluno.ATIVO;
+
+    ///////////////
+    //GETs E SETs//
+    ///////////////
+
+    public get curso(): string {
+        return this._curso;
+    }
+
+    public set curso(valor: string) {
+        this._curso = valor;
+    }
+
+    public get situacao(): SituacaoAluno {
+        return this._situacao;
+    }
+
+    public set situacao(valor: SituacaoAluno) {
+        this._situacao = valor;
+    }
 
     //////////////
     //CONSTRUTOR//
@@ -26,17 +46,17 @@ class Aluno extends Pessoa implements Projeto { // Aluno tem a herança da class
     //MÉTODOS DE INSTÂNCIA// do método abstrato definido  na classe Pessoa.
     //////////////////////// classe Aluno depende do Date e do Math, associação comportamental
 
-    gerarMatricula(): number {
+    protected gerarMatricula(): number {
         let ano: number = new Date().getFullYear();
         let numero: number = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
         return Number(`${ano}${numero}`);
     }
 
-    submeterProjetoPesquisa(): void {
+    public submeterProjetoPesquisa(): void {
         console.log(`Isso é uma submissão de projeto de PESQUISA do aluno ${this.nome}`);
     }
 
-    submeterProjetoExtensão(): void {
+    public submeterProjetoExtensão(): void {
         console.log(`Isso é uma submissão de um projeto de EXTENSÃO do aluno ${this.nome}`);
     }
 }
