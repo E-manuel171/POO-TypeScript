@@ -68,7 +68,6 @@ class Endereco {
         this.estado = estado;
     }
 
-    
 }
 
 export { Endereco }
