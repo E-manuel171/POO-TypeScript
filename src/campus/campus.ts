@@ -49,24 +49,45 @@ class Campus {
 
     // CONSTRUTOR
 
-    constructor(nome: string, endereco: Endereco, alunos: Array<Aluno>, professores: Array<Professor>, TecnicosAdministrativos: Array<TecnicoAdministrativo>) {
-
+    constructor(nome: string, endereco: Endereco, alunos: Array<Aluno>, professores: Array<Professor>, tecnicosAdministrativos: Array<TecnicoAdministrativo>) {
+        this.nome = nome;
+        this.endereco = endereco;
+        this.alunos = alunos;
+        this.professores = professores;
+        this.tecnicosAdministrativos = tecnicosAdministrativos;
     }
 
     // MÉTODOS DE INSTÂNCIA
 
     adicionarProfessor(professor: Professor): void {
-        
+        const campusAtual = professor.campus; // getter de qual campus esse professor é (Ou se não é de nenhum)
+
+        if (professor.campus !== undefined && professor.campus !== this) { // Se o professor não for undefined e não pertencer a esse campus, ele pertence a outro campus qualquer, Então apresentamos um erro
+            throw new Error(`O(A) professor(a) ${professor.nome} ${professor.sobrenome} já faz parte de outro campus.`);
+        }
+
+        professor.campus = this; // professor vai receber o objeto Campus que estamos chamando o método
+
+       if (!this._professores.includes(professor)) { // se o Array dos professores do campus não incluir esse professor ainda
+            this._professores.push(professor); // Então o adicione ao final do Array
+        }
     }
 
     listarProfessores(): void {
-        this._professores.forEach(Professor => {
-            console.log(Professor.nome);
-            console.log(Professor.sobrenome);
-            console.log(Professor.matricula);
+        if (this._professores.length > 0) { // verifica o tamanho do Array de professores, caso seja maior que zero (tenha professores) ele faz a impressão, caso não ele exibe um aviso
             
-        });
+            console.log(`---Professores do campus ${this._nome}---`);
+
+            for (const professor of this._professores) { // for...of para percorre os professores na lista _professores
+                console.log(`Professor(a) ${professor.nome} ${professor.sobrenome} - Matrícula: ${professor.matricula}`);
+            }
+
+        } else {
+            console.log(`O ${this._nome} ainda não possuí professores`);
+        }
+
     }
+    
 }
 
 export { Campus }

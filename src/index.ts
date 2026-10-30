@@ -12,28 +12,23 @@ const endereco02 = new Endereco("47000-000",16, "Rua Z", "Bairro Q", "Cidade K",
 const endereco03 = new Endereco("67676-677", 67, "Rua six seven", "Bairro Ishow", "Cidade Speed", "Bahia");
 const endereco04 = new Endereco("40000-300", 89, "Rua das Palmeiras", "Barra", "Salvador", "Bahia");
 
+const alunosLagarto: Aluno[] = [];
+const professoresLagarto: Professor[] = [];
+const tecnicosAdministrativosLagarto: TecnicoAdministrativo[] = [];
 
-const alunos01: Aluno[] = [
-    new Aluno("Ana", "Silva", "Feminino", "111.111.111-11", 20, true, [endereco01], "Informática", SituacaoAluno.FORMANDO),
-    new Aluno("Carlos", "Santos", "Masculino", "222.222.222-22", 22, true, [endereco02], "Informática", SituacaoAluno.FORMANDO),
-    new Aluno("Pedro", "Oliveira", "Masculino", "333.333.333-33", 19, false, [endereco03], "Informática", SituacaoAluno.FORMANDO),
-    new Aluno("Mariana", "Costa", "Feminino", "444.444.444-44", 21, true, [endereco04], "Informática", SituacaoAluno.FORMANDO)
-];
-const professores01: Professor[] = [
-    new Professor("Carol", "Silva", "Feminino", "111.111.111-11", 20, true, [endereco01], 1001),
-    new Professor("Eliel", "Santos", "Masculino", "222.222.222-22", 22, true, [endereco02], 1002),
-    new Professor("Diego", "Oliveira", "Masculino", "333.333.333-33", 19, false, [endereco03], 1003),
-    new Professor("Alice", "Costa", "Feminino", "444.444.444-44", 21, true, [endereco04], 1004)
-];
-const tecnicosAdministrativos01: TecnicoAdministrativo[] = [
-    new Bibliotecario("Zageht", "Silva", "Masculino", "111.111.111-11", 20, true, [endereco01], "Brasileiro", 123456),
-    new Psicologo("Jaboat", "Santos", "Masculino", "222.222.222-22", 22, true, [endereco02], "Brasileiro", 654321),
-    new Bibliotecario("Django", "Oliveira", "Masculino", "333.333.333-33", 19, false, [endereco03], "Brasileiro", 789123),
-    new Psicologo("Birula", "Costa", "Feminino", "444.444.444-44", 21, true, [endereco04], "Brasileiro", 321789)
-];
+const alunosAracaju: Aluno[] = [];
+const professoresAracaju: Professor[] = [];
+const tecnicosAdministrativosAracaju: TecnicoAdministrativo[] = [];
 
-const ifs: Campus = new Campus("Campus Lagarto", endereco04, alunos01, professores01, tecnicosAdministrativos01);
-ifs.nome = "Campus Lagartixa";
-console.log(`O nome do Campus é: ${ifs.nome}`);
-console.log("------------------------");
-console.log(Pessoa.getQuantidadePessoas());
+const eliel = new Professor("Eliel", "Santos", "Masculino", "222.222.222-22", 22, true, [endereco02], 1002);
+const diego = new Professor("Diego", "Oliveira", "Masculino", "333.333.333-33", 19, false, [endereco03], 1003);
+const alice = new Professor("Alice", "Costa", "Feminino", "444.444.444-44", 21, true, [endereco04], 1004);
+const roberta = new Professor("Roberta", "Cof", "Feminino", "444.444.444-88", 21, true, [endereco01], 1864);
+
+const ifsLagarto: Campus = new Campus("Campus Lagarto", endereco04, alunosLagarto, professoresLagarto, tecnicosAdministrativosLagarto);
+const ifsAracaju: Campus = new Campus("Campus Aracaju", endereco02, alunosAracaju, professoresAracaju, tecnicosAdministrativosAracaju);
+
+ifsLagarto.adicionarProfessor(diego);
+ifsLagarto.listarProfessores();
+ifsLagarto.adicionarProfessor(diego);
+ifsLagarto.listarProfessores();
