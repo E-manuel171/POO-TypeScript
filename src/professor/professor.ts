@@ -1,6 +1,7 @@
 import { Endereco } from "../endereco/endereco";
 import { Pessoa } from "../pessoa/pessoa";
 import { Projeto } from "../projeto/projeto";
+import { Campus } from "../campus/campus";
 
 class Professor extends Pessoa implements Projeto {
     
@@ -9,6 +10,7 @@ class Professor extends Pessoa implements Projeto {
     //////////////////////////
 
     private _salario: number = 0;
+    private _campus?: Campus;
 
     ///////////////
     //GETs E SETs//
@@ -17,9 +19,15 @@ class Professor extends Pessoa implements Projeto {
     public get salario(): number {
         return this._salario;
     }
-
     public set salario(valor: number) {
         this._salario = valor;
+    }
+
+    public get campus(): Campus | undefined {
+        return this._campus;
+    }
+    public set campus(valor: Campus) {
+        this._campus = valor;
     }
 
     //////////////

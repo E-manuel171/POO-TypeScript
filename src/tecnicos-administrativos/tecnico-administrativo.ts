@@ -8,7 +8,6 @@ abstract class TecnicoAdministrativo extends Pessoa {
     public get nacionalidade(): string {
         return this._nacionalidade;
     }
-
     public set nacionalidade(valor: string) {
         this._nacionalidade = valor;
     }

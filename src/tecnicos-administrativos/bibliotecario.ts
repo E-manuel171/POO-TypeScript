@@ -8,7 +8,6 @@ class Bibliotecario extends TecnicoAdministrativo {
     public get CBR(): number {
         return this._CBR;
     }
-
     public set CBR(valor: number) {
         this._CBR = valor;
     }

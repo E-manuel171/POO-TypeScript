@@ -8,7 +8,6 @@ class Psicologo extends TecnicoAdministrativo {
     public get CRP(): number {
         return this._CRP;
     }
-
     public set CRP(valor: number) {
         this._CRP = valor;
     }
