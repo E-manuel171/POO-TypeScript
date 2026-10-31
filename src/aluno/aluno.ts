@@ -1,6 +1,7 @@
 import { Endereco } from "../endereco/endereco";
 import { Pessoa } from "../pessoa/pessoa";
-import { Projeto } from "../projeto/projeto"
+import { Projeto } from "../projeto/projeto";
+import { Evento } from "../eventos-academicos/evento";
 
 class Aluno extends Pessoa implements Projeto { // Aluno tem a herança da classe Pessoa
     
@@ -10,6 +11,7 @@ class Aluno extends Pessoa implements Projeto { // Aluno tem a herança da class
 
     private _curso: string = '';
     private _situacao: SituacaoAluno = SituacaoAluno.ATIVO;
+    private _evento?: Evento;
 
     ///////////////
     //GETs E SETs//
@@ -29,6 +31,17 @@ class Aluno extends Pessoa implements Projeto { // Aluno tem a herança da class
 
     public set situacao(valor: SituacaoAluno) {
         this._situacao = valor;
+    }
+
+    public get evento(): Evento | undefined {
+        return this._evento;
+    }
+
+    public set evento(valor: Evento) {
+        if (this._evento !== undefined && this._evento !== valor) {
+            throw new Error("O aluno já está inscrito em algum outro evento.");
+        }
+        this._evento = valor;
     }
 
     //////////////
@@ -58,6 +71,10 @@ class Aluno extends Pessoa implements Projeto { // Aluno tem a herança da class
 
     public submeterProjetoExtensão(): void {
         console.log(`Isso é uma submissão de um projeto de EXTENSÃO do aluno ${this.nome}`);
+    }
+
+    public consultarEventoInscrito(): Evento | undefined {
+        return this._evento;
     }
 }
 

@@ -2,6 +2,7 @@ import { Endereco } from "../endereco/endereco";
 import { Pessoa } from "../pessoa/pessoa";
 import { Projeto } from "../projeto/projeto";
 import { Campus } from "../campus/campus";
+import { Evento } from "../eventos-academicos/evento";
 
 class Professor extends Pessoa implements Projeto {
     
@@ -11,6 +12,7 @@ class Professor extends Pessoa implements Projeto {
 
     private _salario: number = 0;
     private _campus?: Campus;
+    private _evento?: Evento;
 
     ///////////////
     //GETs E SETs//
@@ -28,6 +30,17 @@ class Professor extends Pessoa implements Projeto {
     }
     public set campus(valor: Campus) {
         this._campus = valor;
+    }
+
+    public get evento(): Evento | undefined {
+        return this._evento;
+    }
+    public set evento(valor: Evento) {
+        if (this._evento !== undefined && this._evento !== valor) {
+            throw new Error("O professor já está inscrito em outro evento.");
+        }
+
+        this._evento = valor;
     }
 
     //////////////
@@ -55,6 +68,10 @@ class Professor extends Pessoa implements Projeto {
 
     public submeterProjetoExtensão(): void {
         console.log(`Parabéns PROFESSOR(A) ${this.nome} por submeter um projeto de EXTENSÃO`);
+    }
+
+    public consultarEventoInscrito(): Evento | undefined {
+        return this._evento;
     }
 }
 
