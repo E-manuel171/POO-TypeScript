@@ -2,12 +2,17 @@ import { Aluno } from "../aluno/aluno";
 import { Endereco } from "../endereco/endereco";
 import { Professor } from "../professor/professor";
 import { TecnicoAdministrativo } from "../tecnicos-administrativos/tecnico-administrativo";
+import { VisitanteDiscente } from "../aluno/visitante-discente";
+import { VisitanteDocente } from "../professor/visitante-docente";
+
+type MembroDiscente = Aluno | VisitanteDiscente;
+type MembroDocente = Professor | VisitanteDocente;
 
 class Campus {
     private _nome: string = '';
     private _endereco!: Endereco;
-    private _alunos: Array<Aluno> = [];
-    private _professores: Array<Professor> = [];
+    private _alunos: Array<MembroDiscente> = [];
+    private _professores: Array<MembroDocente> = [];
     private _tecnicosAdministrativos: Array<TecnicoAdministrativo> = [];
 
     // METODOS GET E SET DOS ATRIBUTOS ACIMA
@@ -26,17 +31,17 @@ class Campus {
         this._endereco = valor;
     }
 
-    public get alunos(): Array<Aluno> {
+    public get alunos(): Array<MembroDiscente> {
         return this._alunos;
     }
-    public set alunos(valor: Array<Aluno>) {
+    public set alunos(valor: Array<MembroDiscente>) {
         this._alunos = valor;
     }
 
-    public get professores(): Array<Professor> {
+    public get professores(): Array<MembroDocente> {
         return this._professores;
     }
-    public set professores(valor: Array<Professor>) {
+    public set professores(valor: Array<MembroDocente>) {
         this._professores = valor;
     }
 
@@ -49,43 +54,55 @@ class Campus {
 
     // CONSTRUTOR
 
-    constructor(nome: string, endereco: Endereco, alunos: Array<Aluno>, professores: Array<Professor>, tecnicosAdministrativos: Array<TecnicoAdministrativo>) {
-        this.nome = nome;
-        this.endereco = endereco;
-        this.alunos = alunos;
-        this.professores = professores;
-        this.tecnicosAdministrativos = tecnicosAdministrativos;
+    constructor(nome: string, endereco: Endereco, alunos: Array<MembroDiscente>, professores: Array<MembroDocente>, tecnicosAdministrativos: Array<TecnicoAdministrativo>) {
+        this._nome = nome;
+        this._endereco = endereco;
+        this._alunos = alunos;
+        this._tecnicosAdministrativos = tecnicosAdministrativos;
+
+        for (const membroDocente of professores) {
+            this.adicionarProfessor(membroDocente);
+        }
+
     }
 
     // MÉTODOS DE INSTÂNCIA
 
-    adicionarProfessor(professor: Professor): void {
-        const campusAtual = professor.campus; // getter de qual campus esse professor é (Ou se não é de nenhum)
+    public adicionarAluno(aluno: MembroDiscente): void {
+        if (!this._alunos.includes(aluno)) this._alunos.push(aluno);
+    }
 
-        if (professor.campus !== undefined && professor.campus !== this) { // Se o professor não for undefined e não pertencer a esse campus, ele pertence a outro campus qualquer, Então apresentamos um erro
-            throw new Error(`O(A) professor(a) ${professor.nome} ${professor.sobrenome} já faz parte de outro campus.`);
+    public adicionarProfessor(professor: MembroDocente): void {
+        if (professor instanceof Professor) {
+            const campusAtual = professor.campus; // Getter do campus ao qual este professor já está associado.
+
+            if (campusAtual !== undefined && campusAtual !== this) { // Impede que o professor pertença a outro campus.
+                throw new Error(
+                    `O professor ${professor.nome} ${professor.sobrenome} já está associado a outro campus.`
+                );
+            }
+
+            professor.campus = this; // Associa o professor efetivo a este campus.
         }
 
-        professor.campus = this; // professor vai receber o objeto Campus que estamos chamando o método
-
-       if (!this._professores.includes(professor)) { // se o Array dos professores do campus não incluir esse professor ainda
-            this._professores.push(professor); // Então o adicione ao final do Array
+        if (!this._professores.includes(professor)) { // Evita adicionar o mesmo docente mais de uma vez.
+            this._professores.push(professor); // Adiciona o docente ao final da lista.
         }
     }
 
-    listarProfessores(): void {
-        if (this._professores.length > 0) { // verifica o tamanho do Array de professores, caso seja maior que zero (tenha professores) ele faz a impressão, caso não ele exibe um aviso
-            
-            console.log(`---Professores do campus ${this._nome}---`);
-
-            for (const professor of this._professores) { // for...of para percorre os professores na lista _professores
-                console.log(`Professor(a) ${professor.nome} ${professor.sobrenome} - Matrícula: ${professor.matricula}`);
-            }
-
-        } else {
-            console.log(`O ${this._nome} ainda não possuí professores`);
+    public listarProfessores(): void {
+        if (this._professores.length === 0) { // Verifica se há docentes antes de listar.
+            console.log(`O campus ${this._nome} ainda não possui professores.`);
+            return;
         }
 
+        console.log(`Professores do campus ${this._nome}:`);
+
+        for (const professor of this._professores) { // Percorre os docentes vinculados ao campus.
+            console.log(
+                `${professor.nome} ${professor.sobrenome} - Matrícula: ${professor.matricula} - ${professor.descreverVinculo()}`
+            );
+        }
     }
     
 }

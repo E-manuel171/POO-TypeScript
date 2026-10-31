@@ -73,6 +73,10 @@ class Professor extends Pessoa implements Projeto {
     public consultarEventoInscrito(): Evento | undefined {
         return this._evento;
     }
+
+    public descreverVinculo(): string {
+        return `Professor regular vinculado ao campus ${this.campus?.nome ?? "ainda não definido"}.`;
+    }
 }
 
 export { Professor }

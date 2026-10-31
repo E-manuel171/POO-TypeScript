@@ -78,4 +78,4 @@ class Evento {
     }
 }
 
-export { Evento };
+export { Evento }
