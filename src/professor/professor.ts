@@ -3,8 +3,9 @@ import { Pessoa } from "../pessoa/pessoa";
 import { Projeto } from "../projeto/projeto";
 import { Campus } from "../campus/campus";
 import { Evento } from "../eventos-academicos/evento";
+import type { UsuarioBiblioteca } from "../emprestimo/usuario-biblioteca";
 
-class Professor extends Pessoa implements Projeto {
+class Professor extends Pessoa implements Projeto, UsuarioBiblioteca {
     
     //////////////////////////
     //ATRIBUTOS DE INSTÂNCIA//
@@ -76,6 +77,15 @@ class Professor extends Pessoa implements Projeto {
 
     public descreverVinculo(): string {
         return `Professor regular vinculado ao campus ${this.campus?.nome ?? "ainda não definido"}.`;
+    }
+
+    public identificar(): string {
+        return `Professor ${this.nome} ${this.sobrenome} - Matrícula: ${this.matricula}`;
+    }
+
+    public estarAptoParaNovoEmprestimo(): boolean {
+        // O enunciado não define restrições específicas para professores.
+        return true;
     }
 }
 

@@ -2,8 +2,9 @@ import { Endereco } from "../endereco/endereco";
 import { Pessoa } from "../pessoa/pessoa";
 import { Projeto } from "../projeto/projeto";
 import { Evento } from "../eventos-academicos/evento";
+import type { UsuarioBiblioteca } from "../emprestimo/usuario-biblioteca";
 
-class Aluno extends Pessoa implements Projeto { // Aluno tem a herança da classe Pessoa
+class Aluno extends Pessoa implements Projeto, UsuarioBiblioteca { // Aluno tem a herança da classe Pessoa
     
     //////////////////////////
     //ATRIBUTOS DE INSTÂNCIA//
@@ -75,6 +76,21 @@ class Aluno extends Pessoa implements Projeto { // Aluno tem a herança da class
 
     public consultarEventoInscrito(): Evento | undefined {
         return this._evento;
+    }
+
+    public identificar(): string {
+        return `Aluno ${this.nome} ${this.sobrenome} - Matrícula: ${this.matricula}`;
+    }
+
+    public estarAptoParaNovoEmprestimo(): boolean {
+        // ATIVO, MATRICULADO e FORMANDO representam matrícula ativa para este empréstimo.
+        const situacoesComMatriculaAtiva: SituacaoAluno[] = [
+            SituacaoAluno.ATIVO,
+            SituacaoAluno.MATRICULADO,
+            SituacaoAluno.FORMANDO
+        ];
+
+        return situacoesComMatriculaAtiva.includes(this.situacao);
     }
 }
 
